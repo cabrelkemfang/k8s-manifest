@@ -1,0 +1,28 @@
+kind: "Service"
+apiVersion: "v1"
+metadata:
+  name: "example-external-service"
+  namespace: dev
+spec:
+  ports:
+    -
+      name: "mysql"
+      protocol: "TCP"
+      port: 3306
+      targetPort: 3306
+      nodePort: 0
+  selector: {}
+
+---
+
+kind: "Endpoints"
+apiVersion: "v1"
+metadata:
+  name: "example-external-service"
+  namespace: dev
+subsets:
+  - addresses:
+      - ip: "10.10.1.1"
+    ports:
+      - name: "mysql"
+        port: 3306

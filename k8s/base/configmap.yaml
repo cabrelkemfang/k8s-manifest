@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-configmap
+  namespace: dev
+  labels:
+    app: api-configmap
+data:
+  DRIVER_CLASS_NAME: "com.mysql.cj.jdbc.Driver"
+  JPA_DIALECT: "org.hibernate.dialect.MySQLDialect"
