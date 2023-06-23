@@ -42,7 +42,7 @@ spec:
       containers:
         - name: employee
           image: cabrelkemfang/employee-service:1.0.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8082
               name: employee-port

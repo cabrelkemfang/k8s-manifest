@@ -13,7 +13,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/mnt/data"
+    path: "/var/lib/mysql/"
 
 ---
 
@@ -46,7 +46,6 @@ spec:
   ports:
     - name: 3306-3306
       port: 3306
-      targetPort: 3306
   clusterIP: None
 
 ---
@@ -83,7 +82,7 @@ spec:
             name: mysql-initdb-config
       containers:
         - name: mysql
-          image:  mysql/mysql-server:8.0.28
+          image:  mysql:5.7.23
           imagePullPolicy: IfNotPresent
           env:
             - name: MYSQL_ROOT_PASSWORD
@@ -116,15 +115,17 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5
-#          readinessProbe:
-#            exec:
-#              command:
-#                - sh
-#                - "-c"
-#                - "mysql -h ${mysql} -uroot -p${MYSQL_ROOT_PASSWORD} -e'SELECT 1'"
-#            initialDelaySeconds: 5
-#            periodSeconds: 2
-#            timeoutSeconds: 5
+            failureThreshold: 4
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - "-c"
+                - "mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e'SELECT 1'"
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            timeoutSeconds: 5
+            failureThreshold: 4
 ---
 
 apiVersion: v1
@@ -132,7 +133,7 @@ kind: ConfigMap
 metadata:
   name: mysql-initdb-config
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "1"
   namespace: dev
 data:
   initdb.sql: |
@@ -141,4 +142,4 @@ data:
     CREATE DATABASE IF NOT EXISTS `department`;
 
     # create root user and grant rights
-    GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
