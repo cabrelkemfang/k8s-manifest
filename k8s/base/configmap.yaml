@@ -12,4 +12,4 @@ data:
   JPA_DIALECT: "org.hibernate.dialect.MySQLDialect"
   EUREKA_SERVER: "http://eureka-0.eureka:8761/eureka"
   ZIPKIN_URL: "http://localhost:30000/api/v2/spans"
-  JDBC_URL: "jdbc:mysql://mysql:3306/employee"
+  JDBC_URL: "jdbc:mysql://mysql:3306/employee?useSSL=false"
