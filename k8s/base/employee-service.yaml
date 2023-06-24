@@ -42,7 +42,7 @@ spec:
       containers:
         - name: employee
           image: cabrelkemfang/employee-service:1.0.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8082
               name: employee-port
@@ -56,7 +56,7 @@ spec:
             httpGet:
               port: employee-port
               path: /api/v1/actuator/health/liveness
-            failureThreshold: 10
+            failureThreshold: 4
             initialDelaySeconds: 30
             periodSeconds: 5
             timeoutSeconds: 50
@@ -64,13 +64,16 @@ spec:
             httpGet:
               port: employee-port
               path: /api/v1/actuator/health/readiness
-            failureThreshold: 10
+            failureThreshold: 4
             initialDelaySeconds: 30
             periodSeconds: 5
             timeoutSeconds: 50
           env:
             - name: JDBC_URL
-              value: jdbc:mysql://mysql:3306/employee
+              valueFrom:
+                configMapKeyRef:
+                  key: JDBC_URL
+                  name: api-configmap
             - name: DRIVER_CLASS_NAME
               valueFrom:
                 configMapKeyRef:
