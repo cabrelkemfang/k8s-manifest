@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka
+  namespace: dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  selector:
+    app: eureka
+    version: 1.0.0
+  ports:
+    - protocol: TCP
+      port: 8761
+  clusterIP: None
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: eureka
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    app: eureka
+    version: 1.0.0
+spec:
+  serviceName: "eureka"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka
+      version: 1.0.0
+  template:
+    metadata:
+      labels:
+        app: eureka
+        version: 1.0.0
+    spec:
+      containers:
+        - name: eureka
+          image: cabrelkemfang/eureka-service-registery:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8761
+          env:
+            - name: HOSTNAME
+              value: eureka.0
+          resources:
+            requests:
+              cpu: "1000m"
+              memory: "0.5Gi"
+            limits:
+              memory: "0.5Gi"
+              cpu: "1000m"
+      restartPolicy: Always

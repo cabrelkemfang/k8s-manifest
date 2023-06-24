@@ -24,7 +24,7 @@ metadata:
   name: mysql-pv-claim
   namespace: dev
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   storageClassName: manual
   accessModes:
@@ -142,7 +142,7 @@ kind: ConfigMap
 metadata:
   name: mysql-initdb-config
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "0"
   namespace: dev
 data:
   initdb.sql: |
