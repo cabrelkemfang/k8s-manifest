@@ -70,10 +70,7 @@ spec:
             timeoutSeconds: 50
           env:
             - name: JDBC_URL
-              valueFrom:
-                configMapKeyRef:
-                  key: JDBC_URL
-                  name: api-configmap
+              value: jdbc:mysql://mysql/employee
             - name: DRIVER_CLASS_NAME
               valueFrom:
                 configMapKeyRef:
