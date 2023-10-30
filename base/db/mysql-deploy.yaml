@@ -35,28 +35,10 @@ spec:
 
 ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-  namespace: dev
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-spec:
-  selector:
-    app: mysql
-    version: 8.0.28
-  ports:
-    - name: 3306-3306
-      port: 3306
-  clusterIP: None
-
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: mysql-deployment
   namespace: dev
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -135,20 +117,3 @@ spec:
             periodSeconds: 2
             timeoutSeconds: 5
             failureThreshold: 4
----
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mysql-initdb-config
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
-  namespace: dev
-data:
-  initdb.sql: |
-    # create databases
-    CREATE DATABASE IF NOT EXISTS `employee`;
-    CREATE DATABASE IF NOT EXISTS `department`;
-
-    # create user and grant rights
-    GRANT ALL PRIVILEGES ON *.* TO $MYSQL_USER@'%' WITH GRANT OPTION;

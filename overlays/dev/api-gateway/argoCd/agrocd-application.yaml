@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: io.growtogether
+  name: api-gateway
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/cabrelkemfang/k8s-manifest.git'
     targetRevision: main
-    path: k8s/base
+    path: overlays/dev/api-gateway
   destination:
     server: https://kubernetes.default.svc
     namespace: dev

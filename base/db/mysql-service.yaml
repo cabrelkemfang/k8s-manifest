@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-serice
+  namespace: dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  selector:
+    app: mysql
+    version: 8.0.28
+  ports:
+    - name: 3306-3306
+      port: 3306
+  clusterIP: None
