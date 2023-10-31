@@ -4,7 +4,6 @@ metadata:
   name: employee-deployment
   annotations:
     argocd.argoproj.io/sync-wave: "2"
-  namespace: dev
   labels:
     app: employee
 spec:
