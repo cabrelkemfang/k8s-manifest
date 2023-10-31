@@ -5,3 +5,5 @@ resources:
 
 patches:
   - path: api-gateway-deployment-patch.yaml
+
+namespace: dev

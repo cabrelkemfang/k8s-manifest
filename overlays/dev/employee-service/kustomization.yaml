@@ -5,3 +5,5 @@ resources:
 
 patches:
   - path: employee-service-patch.yaml
+
+namespace: dev
