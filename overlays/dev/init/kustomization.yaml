@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../api-gateway/argoCd
+- ../employee-service/argoCd
+
+patches:
+  - target:
+      kind: Application
+      version: v1alpha1
+      group: argoproj.io
+    patch: |-
+      - op: replace
+        path: /spec/destination/namespace
+        value: dev
+      

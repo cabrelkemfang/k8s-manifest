@@ -1,0 +1,35 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: api-gateway-app
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     path: overlays/dev/api-gateway
+#   destination:
+#     namespace: dev
+
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: api-gateway-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/cabrelkemfang/k8s-manifest.git'
+    targetRevision: main
+    path: overlays/dev/api-gateway
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
+
+  
