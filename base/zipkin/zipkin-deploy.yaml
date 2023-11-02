@@ -4,7 +4,6 @@ metadata:
   name: zipkin-deployment
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  namespace: dev
   labels:
     app: zipkin
 spec:
