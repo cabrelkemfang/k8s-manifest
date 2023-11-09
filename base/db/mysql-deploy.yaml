@@ -20,9 +20,9 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: fast-storageclass
+  # storageClassName: fast-storageclass
   capacity:
-    storage: 200Mi
+    storage: 300Mi
   accessModes:
     - ReadWriteMany
   gcePersistentDisk:
@@ -38,7 +38,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  storageClassName: fast-storageclass
+  # storageClassName: fast-storageclass
   accessModes:
     - ReadWriteMany
   resources:
