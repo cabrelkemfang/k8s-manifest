@@ -2,7 +2,6 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mysql-pv-volume
-  namespace: dev
   annotations:
     argocd.argoproj.io/sync-wave: "0"
   labels:
@@ -10,7 +9,7 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 1Gi
+    storage: 200Mi
   accessModes:
     - ReadWriteMany
   hostPath:
@@ -22,7 +21,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
-  namespace: dev
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
@@ -31,7 +29,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 200Mi
 
 ---
 
@@ -39,7 +37,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-deployment
-  namespace: dev
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   labels:
@@ -68,34 +65,35 @@ spec:
             name: mysql-initdb-config
       containers:
         - name: mysql
-          image:  mysql:5.7.23
+          image:  mysql/mysql-server:8.0.28
           imagePullPolicy: IfNotPresent
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: api-secret
-                  key: mysql_root_password
+                  key: MYSQL_ROOT_PASSWORD
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
                   name: api-secret
-                  key: mysql_user
+                  key: MYSQL_USER
           ports:
             - containerPort: 3306
               name: mysql-port
           volumeMounts:
-            - mountPath: "/var/lib/mysql/"
-              name: mysql-pv-storage
+            - name: mysql-pv-storage
+              mountPath: "/var/lib/mysql/"
+              
             - name: mysql-initdb
               mountPath: /docker-entrypoint-initdb.d
           resources:
             requests:
-              cpu: "1000m"
-              memory: "1Gi"
+              cpu: "250m"
+              memory: "200Mi"
             limits:
-              memory: "1Gi"
-              cpu: "1000m"
+              memory: "200Mi"
+              cpu: "500m"
           livenessProbe:
             exec:
               command:
