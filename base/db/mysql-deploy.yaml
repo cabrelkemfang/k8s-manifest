@@ -25,7 +25,9 @@ spec:
     storage: 200Mi
   accessModes:
     - ReadWriteMany
-  volumeMode: Filesystem
+  gcePersistentDisk:
+    pdName: my-persistent-disk
+    fsType: ext4
 
 ---
 
