@@ -23,6 +23,7 @@ spec:
         - name: config-volume
           configMap:
             name: api-configmap
+      # restartPolicy: Never
       containers:
         - name: employee
           image: cabrelkemfang/employee-service:1.0.0
@@ -36,52 +37,52 @@ spec:
               memory: "0.5Gi"
             limits:
               memory: "1Gi"
-          livenessProbe:
-            httpGet:
-              port: employee-port
-              path: /api/actuator/health/liveness
-            failureThreshold: 4
-            initialDelaySeconds: 30
-            periodSeconds: 5
-            timeoutSeconds: 50
-          readinessProbe:
-            httpGet:
-              port: employee-port
-              path: /api/actuator/health/readiness
-            failureThreshold: 4
-            initialDelaySeconds: 30
-            periodSeconds: 5
-            timeoutSeconds: 50
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sh", "-c", "sleep 10"]
+          # livenessProbe:
+          #   httpGet:
+          #     port: employee-port
+          #     path: /api/actuator/health/liveness
+          #   failureThreshold: 4
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 5
+          #   timeoutSeconds: 50
+          # readinessProbe:
+          #   httpGet:
+          #     port: employee-port
+          #     path: /api/actuator/health/readiness
+          #   failureThreshold: 4
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 5
+          #   timeoutSeconds: 50
+          # lifecycle:
+          #   preStop:
+          #     exec:
+          #       command: ["sh", "-c", "sleep 10"]
           volumeMounts:
             - name: config-volume
               mountPath: /workspace/config
           env:
-          #   - name: JDBC_URL
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         key: JDBC_URL
-          #         name: api-configmap
-          #   - name: DRIVER_CLASS_NAME
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         key: DRIVER_CLASS_NAME
-          #         name: api-configmap
-          #   - name: JPA_DIALECT
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         key: JPA_DIALECT
-          #         name: api-configmap
+            - name: JDBC_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: JDBC_URL
+                  name: api-configmap
+            - name: DRIVER_CLASS_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: DRIVER_CLASS_NAME
+                  name: api-configmap
+            - name: JPA_DIALECT
+              valueFrom:
+                configMapKeyRef:
+                  key: JPA_DIALECT
+                  name: api-configmap
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  key: mysql_user
+                  key: MYSQL_USER
                   name: api-secret
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: mysql_root_password
+                  key: MYSQL_PASSWORD
                   name: api-secret
