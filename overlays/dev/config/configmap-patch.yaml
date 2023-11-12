@@ -9,8 +9,8 @@ metadata:
 data:
   DRIVER_CLASS_NAME: "com.mysql.cj.jdbc.Driver"
   JPA_DIALECT: "org.hibernate.dialect.MySQLDialect"
-  EUREKA_SERVER_ADDRESS: "http://eureka-deployment-0.eureka-sevice:8761/eureka"
-  EUREKA_SERVER_CLIENT: "http://eureka-deployment-0.eureka-sevice.default.svc.cluster.local:8761/eureka"
+  EUREKA_SERVER_ADDRESS: "http://eureka-deployment-0.eureka:8761/eureka"
+  EUREKA_SERVER_CLIENT: "http://eureka-deployment-0.eureka.default.svc.cluster.local:8761/eureka"
   HOSTNAME: "eureka-deployment-0"
   ZIPKIN_URL: "http://localhost:30000/api/v2/spans"
   JDBC_URL: "jdbc:mysql://mysql/employee?allowPublicKeyRetrieval=true"
