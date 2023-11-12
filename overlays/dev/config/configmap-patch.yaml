@@ -11,6 +11,6 @@ data:
   JPA_DIALECT: "org.hibernate.dialect.MySQLDialect"
   EUREKA_SERVER_ADDRESS: "http://eureka-deployment-0.eureka-service:8761/eureka"
   EUREKA_SERVER_CLIENT: "http://eureka-deployment-0.eureka-service.8761/eureka"
-  HOSTNAME: "eureka-deployment-0"
+  HOSTNAME: "eureka-deployment-0.eureka-service"
   ZIPKIN_URL: "http://localhost:30000/api/v2/spans"
   JDBC_URL: "jdbc:mysql://mysql/employee?allowPublicKeyRetrieval=true"
