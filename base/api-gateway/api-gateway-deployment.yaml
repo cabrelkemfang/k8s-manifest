@@ -28,10 +28,10 @@ spec:
                 configMapKeyRef:
                   key: ZIPKIN_URL
                   name: api-configmap
-            - name: EUREKA_SERVER
+            - name: EUREKA_SERVER_CLIENT
               valueFrom:
                 configMapKeyRef:
-                  key: EUREKA_SERVER
+                  key: EUREKA_SERVER_CLIENT
                   name: api-configmap
           resources:
             requests:

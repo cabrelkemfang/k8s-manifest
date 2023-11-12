@@ -27,8 +27,11 @@ spec:
           ports:
             - containerPort: 8761
           env:
-            - name: HOSTNAME
-              value: eureka.0
+            - name: EUREKA_SERVER_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: EUREKA_SERVER_ADDRESS
+                  name: api-configmap
           resources:
             requests:
               cpu: "1000m"

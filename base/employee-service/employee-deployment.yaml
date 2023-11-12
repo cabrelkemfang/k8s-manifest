@@ -67,6 +67,11 @@ spec:
                 configMapKeyRef:
                   key: JDBC_URL
                   name: api-configmap
+            - name: EUREKA_SERVER_CLIENT
+              valueFrom:
+                configMapKeyRef:
+                  key: EUREKA_SERVER_CLIENT
+                  name: api-configmap
             - name: DRIVER_CLASS_NAME
               valueFrom:
                 configMapKeyRef:
