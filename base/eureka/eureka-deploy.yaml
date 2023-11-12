@@ -8,7 +8,7 @@ metadata:
     app: eureka
     version: 1.0.0
 spec:
-  serviceName: "eureka"
+  serviceName: "eureka-sevice"
   replicas: 1
   selector:
     matchLabels:
