@@ -36,27 +36,28 @@ spec:
               cpu: "200m"
               memory: "0.5Gi"
             limits:
+              cpu: "1000m"
               memory: "1Gi"
-          # livenessProbe:
-          #   httpGet:
-          #     port: employee-port
-          #     path: /api/actuator/health/liveness
-          #   failureThreshold: 4
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 5
-          #   timeoutSeconds: 50
-          # readinessProbe:
-          #   httpGet:
-          #     port: employee-port
-          #     path: /api/actuator/health/readiness
-          #   failureThreshold: 4
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 5
-          #   timeoutSeconds: 50
-          # lifecycle:
-          #   preStop:
-          #     exec:
-          #       command: ["sh", "-c", "sleep 10"]
+          livenessProbe:
+            httpGet:
+              port: employee-port
+              path: /api/actuator/health/liveness
+            failureThreshold: 4
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 50
+          readinessProbe:
+            httpGet:
+              port: employee-port
+              path: /api/actuator/health/readiness
+            failureThreshold: 4
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 50
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
           volumeMounts:
             - name: config-volume
               mountPath: /workspace/config
