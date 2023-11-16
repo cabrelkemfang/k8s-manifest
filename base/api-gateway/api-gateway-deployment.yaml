@@ -22,16 +22,16 @@ spec:
         - name: api-gateway
           image: cabrelkemfang/api-gateway:1.0.0
           imagePullPolicy: Always
+          ports:
+            - containerPort: 8060
+              name: employee-port
+            - containerPort: 9195
+              name: actuator-port
           env:
             - name: ZIPKIN_URL
               valueFrom:
                 configMapKeyRef:
                   key: ZIPKIN_URL
-                  name: api-configmap
-            - name: EUREKA_SERVER_CLIENT
-              valueFrom:
-                configMapKeyRef:
-                  key: EUREKA_SERVER_CLIENT
                   name: api-configmap
           resources:
             requests:
@@ -40,4 +40,23 @@ spec:
             limits:
               memory: "0.5Gi"
               cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              port: actuator-port
+              path: /actuator/health/liveness
+            failureThreshold: 4
+            periodSeconds: 5
+            timeoutSeconds: 50
+          readinessProbe:
+            httpGet:
+              port: actuator-port
+              path: /actuator/health/readiness
+            failureThreshold: 4
+            initialDelaySeconds: 60
+            periodSeconds: 5
+            timeoutSeconds: 60
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
       restartPolicy: Always

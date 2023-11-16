@@ -44,7 +44,6 @@ spec:
               port: actuator-port
               path: /actuator/health/liveness
             failureThreshold: 4
-            initialDelaySeconds: 30
             periodSeconds: 5
             timeoutSeconds: 50
           readinessProbe:
@@ -52,9 +51,9 @@ spec:
               port: actuator-port
               path: /actuator/health/readiness
             failureThreshold: 4
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60
             periodSeconds: 5
-            timeoutSeconds: 50
+            timeoutSeconds: 60
           lifecycle:
             preStop:
               exec:
