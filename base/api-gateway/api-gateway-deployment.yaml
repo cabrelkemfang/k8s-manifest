@@ -46,14 +46,14 @@ spec:
               path: /actuator/health/liveness
             failureThreshold: 4
             periodSeconds: 5
-            initialDelaySeconds: 60
+            initialDelaySeconds: 80
             timeoutSeconds: 50
           readinessProbe:
             httpGet:
               port: actuator-port
               path: /actuator/health/readiness
             failureThreshold: 4
-            initialDelaySeconds: 60
+            initialDelaySeconds: 80
             periodSeconds: 5
             timeoutSeconds: 60
           lifecycle:
