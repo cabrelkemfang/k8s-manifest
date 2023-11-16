@@ -39,13 +39,6 @@ spec:
             limits:
               cpu: "1000m"
               memory: "1Gi"
-          livenessProbe:
-            httpGet:
-              port: actuator-port
-              path: /actuator/health/liveness
-            failureThreshold: 4
-            periodSeconds: 5
-            timeoutSeconds: 50
           readinessProbe:
             httpGet:
               port: actuator-port
@@ -54,6 +47,15 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 5
             timeoutSeconds: 60
+            
+          livenessProbe:
+            httpGet:
+              port: actuator-port
+              path: /actuator/health/liveness
+            failureThreshold: 4
+            periodSeconds: 5
+            initialDelaySeconds: 60
+            timeoutSeconds: 50
           lifecycle:
             preStop:
               exec:
