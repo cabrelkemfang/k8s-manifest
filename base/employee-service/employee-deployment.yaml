@@ -23,7 +23,6 @@ spec:
         - name: config-volume
           configMap:
             name: api-configmap
-      # restartPolicy: Never
       containers:
         - name: employee
           image: cabrelkemfang/employee-service:1.0.0
@@ -31,6 +30,8 @@ spec:
           ports:
             - containerPort: 8082
               name: employee-port
+            - containerPort: 9195
+              name: actuator-port
           resources:
             requests:
               cpu: "200m"
@@ -40,16 +41,16 @@ spec:
               memory: "1Gi"
           livenessProbe:
             httpGet:
-              port: employee-port
-              path: /api/actuator/health/liveness
+              port: actuator-port
+              path: /actuator/health/liveness
             failureThreshold: 4
             initialDelaySeconds: 30
             periodSeconds: 5
             timeoutSeconds: 50
           readinessProbe:
             httpGet:
-              port: employee-port
-              path: /api/actuator/health/readiness
+              port: actuator-port
+              path: /actuator/health/readiness
             failureThreshold: 4
             initialDelaySeconds: 30
             periodSeconds: 5
@@ -62,15 +63,12 @@ spec:
             - name: config-volume
               mountPath: /workspace/config
           env:
+            - name: BPL_JVM_THREAD_COUNT
+              value: "100"
             - name: JDBC_URL
               valueFrom:
                 configMapKeyRef:
                   key: JDBC_URL
-                  name: api-configmap
-            - name: EUREKA_SERVER_CLIENT
-              valueFrom:
-                configMapKeyRef:
-                  key: EUREKA_SERVER_CLIENT
                   name: api-configmap
             - name: DRIVER_CLASS_NAME
               valueFrom:
